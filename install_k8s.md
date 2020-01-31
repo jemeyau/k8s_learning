@@ -1,4 +1,4 @@
-###1. 安装kubelet kubeadm kubectl和docker
+### 1. 安装kubelet kubeadm kubectl和docker
 需要设置阿里云的安装源
 ```shell
 1. apt-get update && apt-get install -y apt-transport-https
@@ -11,7 +11,7 @@ EOF
 5. apt-get install -y kubelet kubeadm kubectl docker.io
 ```
 
-###2. kubeadm init
+### 2. kubeadm init
 拉取kubeadm初始化需要的镜像，由于k8s.gcr.io国内无法访问，所以先通过阿里云的镜像手动拉取所需镜像,
 具体需要哪些版本的镜像，可通过如下命令获取：
 ```shell
@@ -51,7 +51,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl get nodes
 ```
 
-###3. 安装网络插件
+### 3. 安装网络插件
 执行如下命令即可
 ```shell
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
@@ -59,7 +59,7 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 
 此时再检查节点状态，应该为**Ready**。
 
-###4. 安装dashboard
+### 4. 安装dashboard
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
@@ -85,7 +85,7 @@ kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-syst
 
 访问**https://<node-ip>:<node-port>**
 
-###5. 安装Rook
+### 5. 安装Rook
 ```shell
 git clone https://github.com/rook/rook.git
 cd rook/cluster/examples/kubernetes/ceph
