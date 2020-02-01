@@ -46,6 +46,12 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
+单节点k8s执行如下命令
+```shell
+kubectl taint nodes --all node-role.kubernetes.io/master-
+```
+
+
 此时可以检查master节点的状态，应该为**NotReady**，因为尚未部署网络插件。
 ```shell
 kubectl get nodes
@@ -70,6 +76,7 @@ kubectl get pods -n kube-system
 
 Dashboard Service 添加
 ```shell
+type: NodePort
 nodePort: 30001
 ```
 
@@ -83,9 +90,10 @@ kubectl proxy --address='0.0.0.0'  --accept-hosts='^*$'  --disable-filter=true &
 kubectl -n kube-system describe $(kubectl -n kube-system get secret -n kube-system -o name | grep namespace) | grep token
 ```
 
-访问**https://<node-ip>:<node-port>**
+访问**https://\<node-ip\>:\<node-port>**
 
 ### 5. 安装Rook
+速度慢，可尝试国内镜像 **https://gitee.com/mirrors/ROOK.git**
 ```shell
 git clone https://github.com/rook/rook.git
 cd rook/cluster/examples/kubernetes/ceph
